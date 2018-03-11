@@ -1,13 +1,13 @@
-// Telescoping constructor pattern - does not scale well! - Pages 11-12
+// Telescoping constructor pattern - does not scale well! - Pages 10-11
 package org.effectivejava.examples.chapter02.item02.telescopingconstructor;
 
 public class NutritionFacts {
-	private final int servingSize; // (mL) required
-	private final int servings; // (per container) required
-	private final int calories; // optional
-	private final int fat; // (g) optional
-	private final int sodium; // (mg) optional
-	private final int carbohydrate; // (g) optional
+	private final int servingSize; 	// (mL) 			required
+	private final int servings; 	// (per container) 	required
+	private final int calories; 	// (per serving)	optional
+	private final int fat; 			// (g) 				optional
+	private final int sodium; 		// (mg) 			optional
+	private final int carbohydrate; // (g) 				optional
 
 	public NutritionFacts(int servingSize, int servings) {
 		this(servingSize, servings, 0);
@@ -26,8 +26,7 @@ public class NutritionFacts {
 		this(servingSize, servings, calories, fat, sodium, 0);
 	}
 
-	public NutritionFacts(int servingSize, int servings, int calories, int fat,
-			int sodium, int carbohydrate) {
+	public NutritionFacts(int servingSize, int servings, int calories, int fat, int sodium, int carbohydrate) {
 		this.servingSize = servingSize;
 		this.servings = servings;
 		this.calories = calories;

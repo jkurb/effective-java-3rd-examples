@@ -1,4 +1,4 @@
-// JavaBeans Pattern - allows inconsistency, mandates mutability - Pages 12-13
+// JavaBeans Pattern - allows inconsistency, mandates mutability - Pages 11-12
 package org.effectivejava.examples.chapter02.item02.javabeans;
 
 public class NutritionFacts {

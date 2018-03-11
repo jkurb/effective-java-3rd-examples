@@ -1,41 +1,45 @@
 // The strategy enum pattern
 package org.effectivejava.examples.chapter06.item30;
 
+// The strategy enum pattern
 enum PayrollDay {
-	MONDAY(PayType.WEEKDAY), TUESDAY(PayType.WEEKDAY), WEDNESDAY(
-			PayType.WEEKDAY), THURSDAY(PayType.WEEKDAY), FRIDAY(PayType.WEEKDAY), SATURDAY(
-			PayType.WEEKEND), SUNDAY(PayType.WEEKEND);
+    MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY,
+    SATURDAY(PayType.WEEKEND), SUNDAY(PayType.WEEKEND);
+    private final PayType payType;
 
-	private final PayType payType;
+    PayrollDay(PayType payType) {
+        this.payType = payType;
+    }
 
-	PayrollDay(PayType payType) {
-		this.payType = payType;
-	}
+    PayrollDay() {
+        this(PayType.WEEKDAY);
+    } // Default
 
-	double pay(double hoursWorked, double payRate) {
-		return payType.pay(hoursWorked, payRate);
-	}
+    int pay(int minutesWorked, int payRate) {
+        return payType.pay(minutesWorked, payRate);
+    }
 
-	// The strategy enum type
-	private enum PayType {
-		WEEKDAY {
-			double overtimePay(double hours, double payRate) {
-				return hours <= HOURS_PER_SHIFT ? 0 : (hours - HOURS_PER_SHIFT)
-						* payRate / 2;
-			}
-		},
-		WEEKEND {
-			double overtimePay(double hours, double payRate) {
-				return hours * payRate / 2;
-			}
-		};
-		private static final int HOURS_PER_SHIFT = 8;
+    // The strategy enum type
+    private enum PayType {
+        WEEKDAY {
+            int overtimePay(int minsWorked, int payRate) {
+                return minsWorked <= MINS_PER_SHIFT ? 0 :
+                        (minsWorked - MINS_PER_SHIFT) * payRate / 2;
+            }
+        },
+        WEEKEND {
+            int overtimePay(int minsWorked, int payRate) {
+                return minsWorked * payRate / 2;
+            }
+        };
 
-		abstract double overtimePay(double hrs, double payRate);
+        abstract int overtimePay(int mins, int payRate);
 
-		double pay(double hoursWorked, double payRate) {
-			double basePay = hoursWorked * payRate;
-			return basePay + overtimePay(hoursWorked, payRate);
-		}
-	}
+        private static final int MINS_PER_SHIFT = 8 * 60;
+
+        int pay(int minsWorked, int payRate) {
+            int basePay = minsWorked * payRate;
+            return basePay + overtimePay(minsWorked, payRate);
+        }
+    }
 }

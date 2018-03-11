@@ -1,11 +1,10 @@
-// Making PhoneNumber comparable - Pages 65-66
+// Adding a toString method to PhoneNumber - page 52
 package org.effectivejava.examples.chapter03.item12;
 
-import java.util.NavigableSet;
-import java.util.Random;
-import java.util.TreeSet;
+import java.util.HashMap;
+import java.util.Map;
 
-public final class PhoneNumber implements Cloneable, Comparable<PhoneNumber> {
+public final class PhoneNumber {
 	private final short areaCode;
 	private final short prefix;
 	private final short lineNumber;
@@ -63,64 +62,9 @@ public final class PhoneNumber implements Cloneable, Comparable<PhoneNumber> {
 		return String.format("(%03d) %03d-%04d", areaCode, prefix, lineNumber);
 	}
 
-	@Override
-	public PhoneNumber clone() {
-		try {
-			return (PhoneNumber) super.clone();
-		} catch (CloneNotSupportedException e) {
-			throw new AssertionError(); // Can't happen
-		}
-	}
-
-	// Works fine, but can be made faster
-	// public int compareTo(PhoneNumber pn) {
-	// // Compare area codes
-	// if (areaCode < pn.areaCode)
-	// return -1;
-	// if (areaCode > pn.areaCode)
-	// return 1;
-	//
-	// // Area codes are equal, compare prefixes
-	// if (prefix < pn.prefix)
-	// return -1;
-	// if (prefix > pn.prefix)
-	// return 1;
-	//
-	// // Area codes and prefixes are equal, compare line numbers
-	// if (lineNumber < pn.lineNumber)
-	// return -1;
-	// if (lineNumber > pn.lineNumber)
-	// return 1;
-	//
-	// return 0; // All fields are equal
-	// }
-
-	public int compareTo(PhoneNumber pn) {
-		// Compare area codes
-		int areaCodeDiff = areaCode - pn.areaCode;
-		if (areaCodeDiff != 0)
-			return areaCodeDiff;
-
-		// Area codes are equal, compare prefixes
-		int prefixDiff = prefix - pn.prefix;
-		if (prefixDiff != 0)
-			return prefixDiff;
-
-		// Area codes and prefixes are equal, compare line numbers
-		return lineNumber - pn.lineNumber;
-	}
-
 	public static void main(String[] args) {
-		NavigableSet<PhoneNumber> s = new TreeSet<PhoneNumber>();
-		for (int i = 0; i < 10; i++)
-			s.add(randomPhoneNumber());
-		System.out.println(s);
-	}
-
-	private static final Random rnd = new Random();
-
-	private static PhoneNumber randomPhoneNumber() {
-		return new PhoneNumber((short) rnd.nextInt(1000),
-				(short) rnd.nextInt(1000), (short) rnd.nextInt(10000));
+		Map<PhoneNumber, String> m = new HashMap<PhoneNumber, String>();
+		m.put(new PhoneNumber(707, 867, 5309), "Jenny");
+		System.out.println(m);
 	}
 }
